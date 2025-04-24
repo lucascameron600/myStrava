@@ -4,11 +4,13 @@ import matplotlib.pyplot as plt
 from Workout import Workout
 from Person import Person
 from matplotlib.backends.backend_pdf import PdfPages
+from Plt import genPlot
 
 Lucas = Person("Luke", 25, 72, 215, 76)
 fakewrkout = 'Afternoon_Run.gpx'
 Workout1 = Workout(fakewrkout, Lucas)
-
+Plotter = genPlot(Workout1)
+Plotter.genAll()
 min_hr = np.min(Workout1.hrs)
 max_hr = np.max(Workout1.hrs)
 hr_range = max_hr - min_hr
@@ -31,28 +33,13 @@ print(avgHR)
 
 print(Workout1.getHrZones())
 
-#plt.hist(hrs)
-#plot heart rate in histogram and send to pdf
-with PdfPages('heart_rate_histogram.pdf') as pdf:
 
-    histEdges = Workout1.getHrZones()
-    zoneLabels = ['Z1', 'Z2', 'Z3', 'Z4', 'Z5']
+fig, axes = plt.subplots(1,2, figsize=(12,5))
 
-    binCenters = [(histEdges[i] + histEdges[i+1]) / 2 for i in range(len(histEdges)-1)]
-    plt.xticks(binCenters, zoneLabels)
-
-
-    plt.hist(Workout1.hrs, bins=histEdges, color='red', edgecolor='black')
-
-    plt.axvline(avgHR, color='black', linestyle='--', label=f'Mean: {avgHR:.1f} bpm')
-
-    plt.xlabel('Heart Rate (bpm)')
-    plt.ylabel('Frequency')
-    plt.title('Heart Rate Distribution')
-    plt.grid(True)
-    pdf.savefig()
-    plt.close()
-
+Plotter.genAll(axes[0])
+Plotter.genAll(axes[])
+plt.tight_layout()
+plt.show()
 cals = Workout1.calories_burned()
 bounds = Workout1.calcHrConf()
 

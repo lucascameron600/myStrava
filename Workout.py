@@ -26,20 +26,14 @@ class Workout:
 
     def parseGpx(self):
         def extractTime(line):
-            #print(line)
             hour = float(line[17:19])
-            #print('Hour = ',hour)
             minute = float(line[20:22])
-            #print('Minute = ',minute)
             second = float(line[23:25])
-            #print('Second = ',second)
             t = hour + minute/60.0 + second/3600.0
             return t
 
         def extractLatLon(line):
-            #print(line)
             row = line.split('"')
-            #print(row)
             lt = float(row[1])
             ln = float(row[3])
             return lt,ln
@@ -197,18 +191,18 @@ class Workout:
             distance += self.haversine(self.lat[i-1], self.lon[i-1], self.lat[i], self.lon[i])
         return distance
 
-
+    #put this somewhere else bro I dont want this static method lingering in my workout class
     @staticmethod
     def haversine(lat1, lon1, lat2, lon2):
-        # convert decimal degrees to radians
+
         lat1, lon1, lat2, lon2 = map(radians, [lat1, lon1, lat2, lon2])
 
-        # haversine formula
+        # haversine
         dlon = lon2 - lon1
         dlat = lat2 - lat1
         a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
         c = 2 * asin(sqrt(a))
-        r = 3956 # Radius of earth in kilometers. Use 3956 for miles. Determines return value units.
+        r = 3956 # Radius of earth in miles
         return c * r
 
 
