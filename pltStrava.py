@@ -42,10 +42,16 @@ plt.tight_layout()
 plt.show()
 cals = Workout1.calories_burned()
 bounds = Workout1.calcHrConf()
-
+for time in Workout1.distancelist
+    print(dist)
 print(f'Total Duration in Mins {Workout1.getDuration()}')
 print(f"{Lucas.name} burned {cals:.2f} calories.")
 print(f'Bounds are {bounds}')
-print(f'Total percent in each zone {Workout1.getZonePercents()}')
+print(f'Total percent in each zone {round(Workout1.getZonePercents())}')
 print(f'Total Distance Traveled = {Workout1.getDistanceTraveled()}')
 print(f'Average pace is {Workout1.getAvgPace()} min per mile')
+
+if Workout1 > Workout2:
+    print('You spent more time in zone two in Workout1 signaling greater recovery capacity.')
+else:
+    print('You spent more time in zone two in Workout2')

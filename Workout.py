@@ -8,22 +8,23 @@ from math import radians, cos, sin, asin, sqrt, atan2, degrees
 class Workout:
 
 
-    def __init__ (self, workoutgpx, person):
+    def __init__ (self, workoutgpx, person, workoutname):
 
         self.workoutgpx = workoutgpx
+        self.workoutname = workoutname
         self.lat, self.lon, self.ele, self.hrs, self.time = self.parseGpx()
-
-
         self.person = person
-       # self.distance =
        # self.elevationGain =
         self.avgHeartRate = np.mean(self.hrs)
-
         self.totalDurationMins = np.size(self.time) / 60
-
         self.caloriesBurned = self.calories_burned()
+        self.dist = np.array([])
+        self.getDistanceTraveled()
+        
+    def __gt__(self, other):
+        return (self.getZonePercents()[1] > other.getZonePercents()[1])
 
-
+        
     def parseGpx(self):
         def extractTime(line):
             hour = float(line[17:19])
@@ -58,9 +59,6 @@ class Workout:
             file.close()
             print(fullpath,'LINES = ',length)
             return length
-
-
-
 
         lat = []
         lon = []
@@ -126,7 +124,7 @@ class Workout:
         ## take the age height and weight and return heart rate zones 1-5 in a range
 
         MaxHR = 220 - self.person.age
-
+        
         ReserveHR = MaxHR - self.person.RestHR
 
         calc = ReserveHR + self.person.RestHR
@@ -184,11 +182,25 @@ class Workout:
 
     def getAvgPace(self):
         return self.getDuration()/self.getDistanceTraveled()
+    
+    
+    
+#   def getPacePerMile(self):
+#       duration = self.getDuration() 
+#       distanceTraveled = self.getDistanceTraveled()
+#       milePaces = []
+#       mileMarkers = []
+#       
+#       for dis in self.dist
+#           
 
     def getDistanceTraveled(self):
         distance = 0.0
+        distancelist = []
         for i in range(1, np.size(self.lat)):
             distance += self.haversine(self.lat[i-1], self.lon[i-1], self.lat[i], self.lon[i])
+            distancelist.append(distance)
+        self.dist = distancelist
         return distance
 
     #put this somewhere else bro I dont want this static method lingering in my workout class
