@@ -127,7 +127,7 @@ class Workout:
         
         ReserveHR = MaxHR - self.person.RestHR
 
-        calc = ReserveHR + self.person.RestHR
+        #calc = ReserveHR + self.person.RestHR
 
         zone1low = (.50 * ReserveHR) +self.person.RestHR
         zone1high = (.60 * ReserveHR)+ self.person.RestHR
