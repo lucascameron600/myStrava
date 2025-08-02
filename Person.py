@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 class Person:
-    def __init__(self, name, age, height, weight, RestHR):
+    def __init__(self, name, age, height, weight, RestHR, GPXfolder):
         self.name = name
         self.age = age
         self.height = height
